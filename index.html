@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>www.boiler.com</title>
+    <meta property="og:image" content="https://cdn.jsdelivr.net/gh/Web3Engineer/Web3Engineer@main/mtnBanner.jpg" />
+    <meta property="og:title" content="Boiler SEO Title Here" />
+    <meta property="og:description" content="Description For Boiler Here" />
+    <meta property="og:url" content="www.boiler.com" />
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: rgb(22, 68, 22);
+      }
+    </style>
+  </head>
+  <body>
+    <script defer src="../Utilities/JS/SHA512.min.js">
+      /*first load static assets*/
+      const noncer = 1;/*to test squarespace to see if even a forec-no-cache even works...*/
+    </script>
+
+    <script defer>
+      /*then load dynamic assets*/
+      window.onload = function () {
+        const getYMDsyncd = function () {
+          const now = new Date();
+          const year = now.getUTCFullYear();
+          const month = String(now.getUTCMonth() + 1).padStart(2, "0");
+          const day = String(now.getUTCDate()).padStart(2, "0");
+          return `${year}${month}${day}`;
+        };
+
+        const pullCDNdaily = function (_salt, _appName) {
+          const salt = _salt;
+          const appName = _appName;
+          const ymd = getYMDsyncd();
+          const hashedResult = sha512(`${salt}${appName}${ymd}`);
+          const hashedTrunc = hashedResult.slice(59, -59);
+          const dataScript = document.createElement("script");
+          dataScript.src = `https://cdn.jsdelivr.net/gh/srvrshard1/cdn@${hashedTrunc}/manifestData.js`;
+          dataScript.onload = function () {
+            /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+            /**/
+            /**/
+            /*INIT APP POINT*/ console.log(manifestData.commitData.dataKeyBin2); /*INIT APP POINT*/
+            /**/
+            /**/
+            /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+          };
+          document.head.append(dataScript);
+        };
+        pullCDNdaily("salt", "app");
+      };
+    </script>
+  </body>
+</html>
